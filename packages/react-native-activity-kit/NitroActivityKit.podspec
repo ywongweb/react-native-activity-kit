@@ -10,7 +10,7 @@ Pod::Spec.new do |s|
   s.license      = package["license"]
   s.authors      = package["author"]
 
-  s.platforms    = { :ios => 26.0 }
+  s.platforms    = { :ios => 16.1 }
   s.source       = { :git => "https://github.com/kingstinct/react-native-activity-kit.git", :tag => "#{s.version}" }
 
   s.source_files = [

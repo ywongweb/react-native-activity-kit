@@ -1,5 +1,4 @@
 import ActivityKit
-import AlarmKit
 import WidgetKit
 import SwiftUI
 import NitroActivityKitCore

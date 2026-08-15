@@ -9,15 +9,8 @@ struct exportWidgets: WidgetBundle {
       }
 
       private func widgets() -> some Widget {
-          if #available(iOS 26, *) {
-              return WidgetBundleBuilder.buildBlock( widget(),
-                                                     // widgetControl(),
-                                                     WidgetLiveActivity(),
-                                                   WidgetLiveActivityAlarm())
-          } else {
-              return WidgetBundleBuilder.buildBlock( widget(),
-                                                     // widgetControl(),
-                                                     WidgetLiveActivity())
-          }
+          return WidgetBundleBuilder.buildBlock( widget(),
+                                                 // widgetControl(),
+                                                 WidgetLiveActivity())
       }
 }

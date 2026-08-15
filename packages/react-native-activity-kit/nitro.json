@@ -11,9 +11,6 @@
   "autolinking": {
     "ActivityKitModule": {
       "swift": "ActivityKitModule"
-    },
-    "AlarmKitModule": {
-      "swift": "AlarmKitModule"
     }
   },
   "ignorePaths": ["**/node_modules"]
