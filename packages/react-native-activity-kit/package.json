@@ -28,7 +28,6 @@
     "README.md"
   ],
   "scripts": {
-    "postinstall": "yarn run specs",
     "typecheck": "tsc --noEmit",
     "clean": "rm -rf android/build node_modules/**/android/build lib",
     "prepublish": "yarn run specs",
