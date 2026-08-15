@@ -5,8 +5,8 @@ name: Test
 on:
   workflow_call:
     inputs:
-      bun-version:
-        description: "Bun Version"
+      node-version:
+        description: "Node Version"
         required: false
         type: string
       os:
@@ -15,10 +15,10 @@ on:
         type: string
   workflow_dispatch:
     inputs:
-      bun-version:
-        description: "Bun Version"
+      node-version:
+        description: "Node Version"
         required: false
-        default: "latest"
+        default: "22"
         type: string
       os:
         description: "Operating System"
@@ -49,12 +49,17 @@ jobs:
   #     # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
   #     - uses: actions/checkout@v4
 
-  #     - uses: oven-sh/setup-bun@v2
+  #     - uses: actions/setup-node@v4
+  #       with:
+  #         node-version: ${{ inputs.node-version || '22' }}
+  #         cache: yarn
 
-  #     - run: bun install
+  #     - run: corepack enable
+
+  #     - run: yarn install --immutable
 
   #     - name: Test
-  #       run: bun run test
+  #       run: yarn test
 
   typecheck:
     runs-on: ${{ inputs.os || 'ubuntu-latest' }}
@@ -65,12 +70,17 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v4
 
-      - uses: oven-sh/setup-bun@v2
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ inputs.node-version || '22' }}
+          cache: yarn
 
-      - run: bun install
+      - run: corepack enable
+
+      - run: yarn install --immutable
 
       - name: Typecheck
-        run: bun run typecheck
+        run: yarn typecheck
 
   lint:
     # The type of runner that the job will run on
@@ -82,12 +92,17 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v4
 
-      - uses: oven-sh/setup-bun@v2
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ inputs.node-version || '22' }}
+          cache: yarn
 
-      - run: bun install
+      - run: corepack enable
+
+      - run: yarn install --immutable
 
       - name: Lint
-        run: bun run lint
+        run: yarn lint
 
   swiftlint:
     # The type of runner that the job will run on
@@ -99,14 +114,19 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v4
 
-      - uses: oven-sh/setup-bun@v2
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ inputs.node-version || '22' }}
+          cache: yarn
 
-      - run: bun install
+      - run: corepack enable
+
+      - run: yarn install --immutable
 
       - run: brew install swiftlint
 
       - name: Lint
-        run: bun run swiftlint
+        run: yarn swiftlint
 
   # build-ios-beta:
   #   # Only run on macOS since we need Xcode
@@ -117,10 +137,15 @@ jobs:
   #     # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
   #     - uses: actions/checkout@v4
 
-  #     - uses: oven-sh/setup-bun@v2
+  #     - uses: actions/setup-node@v4
+  #       with:
+  #         node-version: ${{ inputs.node-version || '22' }}
+  #         cache: yarn
+
+  #     - run: corepack enable
 
   #     - name: Install dependencies
-  #       run: bun install
+  #       run: yarn install --immutable
 
   #     ## latest stable
   #     - run: sudo xcode-select -s /Applications/Xcode_26_beta.app
@@ -131,16 +156,16 @@ jobs:
   #         # optional but useful:
   #         xcrun simctl list runtimes
 
-  #     - run: bun run specs
+  #     - run: yarn specs
   #       working-directory: packages/react-native-activity-kit
 
   #     - name: Expo Prebuild
   #       working-directory: apps/activity-kit-example
-  #       run: bunx expo prebuild --platform ios
+  #       run: yarn expo prebuild --platform ios
 
   #     - name: Build iOS project
   #       working-directory: apps/activity-kit-example
-  #       run: bun run build-sim
+  #       run: yarn build-sim
 
   build-ios:
     # Only run on macOS since we need Xcode
@@ -151,24 +176,29 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v4
 
-      - uses: oven-sh/setup-bun@v2
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ inputs.node-version || '22' }}
+          cache: yarn
+
+      - run: corepack enable
 
       - name: Install dependencies
-        run: bun install
+        run: yarn install --immutable
 
       ## latest stable
       ## - run: sudo xcode-select -s /Applications/Xcode_16.4.app
 
-      - run: bun run specs
+      - run: yarn specs
         working-directory: packages/react-native-activity-kit
 
       - name: Expo Prebuild
         working-directory: apps/activity-kit-example
-        run: bunx expo prebuild --platform ios
+        run: yarn expo prebuild --platform ios
 
       - name: Build iOS project
         working-directory: apps/activity-kit-example
-        run: bun run build-sim
+        run: yarn build-sim
 
   # since this is the default for Expo 52
   # build-ios-162:
@@ -180,20 +210,25 @@ jobs:
   #     # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
   #     - uses: actions/checkout@v4
 
-  #     - uses: oven-sh/setup-bun@v2
+  #     - uses: actions/setup-node@v4
+  #       with:
+  #         node-version: ${{ inputs.node-version || '22' }}
+  #         cache: yarn
 
   #     - run: sudo xcode-select -s /Applications/Xcode_16.2.app
 
-  #     - name: Install dependencies
-  #       run: bun install
+  #     - run: corepack enable
 
-  #     - run: bun run specs
+  #     - name: Install dependencies
+  #       run: yarn install --immutable
+
+  #     - run: yarn specs
   #       working-directory: packages/react-native-activity-kit
 
   #     - name: Expo Prebuild
   #       working-directory: apps/activity-kit-example
-  #       run: bunx expo prebuild --platform ios
+  #       run: yarn expo prebuild --platform ios
 
   #     - name: Build iOS project
   #       working-directory: apps/activity-kit-example
-  #       run: bun run build-sim
+  #       run: yarn build-sim

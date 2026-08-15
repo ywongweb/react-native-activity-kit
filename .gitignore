@@ -1,5 +1,11 @@
-# dependencies (bun install)
+# dependencies (yarn install)
 node_modules
+
+# yarn (node-modules linker; not using zero-installs)
+.yarn/cache
+.yarn/install-state.gz
+.yarn/unplugged
+.pnp.*
 
 # output
 out
@@ -34,4 +40,3 @@ report.[0-9]_.[0-9]_.[0-9]_.[0-9]_.json
 
 
 generated
-/packages/react-native-alarm-kit/android

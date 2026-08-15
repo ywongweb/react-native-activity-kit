@@ -19,18 +19,23 @@ jobs:
       - name: Checkout Repo
         uses: actions/checkout@v4
 
-      - uses: oven-sh/setup-bun@v2
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: yarn
 
-      - run: HUSKY=0 bun install
+      - run: corepack enable
+
+      - run: HUSKY=0 yarn install --immutable
         env:
           HUSKY: 0
-          
+
       - name: Create Release Pull Request or Publish to npm
         id: changesets
         uses: changesets/action@v1
         with:
           # This expects you to have a script called release which does a build for your packages and calls changeset publish
-          publish: bun run changeset-release
+          publish: yarn changeset-release
           createGithubReleases: true
 
         env:

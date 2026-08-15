@@ -118,26 +118,26 @@ This is a monorepo containing:
 ### Setup
 
 ```bash
-bun install
+yarn install
 ```
 
 ### Development Commands
 
 ```bash
 # Build the library
-bun run codegen
+yarn codegen
 
 # Lint code
-bun run lint
+yarn lint
 
 # Type checking
-bun run typecheck
+yarn typecheck
 
 # Clean build artifacts
-bun run clean:node_modules
+yarn clean:node_modules
 
 # Create a changeset for versioning
-bun run create-changeset
+yarn create-changeset
 ```
 
 ## 🛠️ Architecture
@@ -157,7 +157,7 @@ Built on [Nitro Modules](https://github.com/mrousavy/nitro) for:
 1. Fork the repository
 2. Create your feature branch (`git checkout -b feature/amazing-feature`)
 3. Make your changes
-4. Run tests and linting (`bun run lint && bun run typecheck`)
+4. Run tests and linting (`yarn lint && yarn typecheck`)
 5. Commit your changes (`git commit -m 'Add amazing feature'`)
 6. Push to the branch (`git push origin feature/amazing-feature`)
 7. Open a Pull Request

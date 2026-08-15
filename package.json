@@ -2,28 +2,27 @@
   "name": "react-native-activity-kit-mono",
   "private": true,
   "scripts": {
-    "changeset-release": "cp README.md packages/react-native-activity-kit && bunx changeset publish",
+    "changeset-release": "cp README.md packages/react-native-activity-kit && yarn changeset publish",
     "clean:node_modules": "rm -rf node_modules/ && find . -name 'node_modules' -type d -prune -exec rm -rf '{}' +",
-    "codegen": "bun run --filter './packages/*' specs && cd apps/activity-kit-example/ios && pod install",
-    "create-changeset": "bunx changeset",
-    "lint-fix": "bunx @biomejs/biome check --fix",
-    "lint": "bunx @biomejs/biome check",
+    "codegen": "yarn workspace @kingstinct/react-native-activity-kit specs && cd apps/activity-kit-example/ios && pod install",
+    "create-changeset": "yarn changeset",
+    "lint-fix": "biome check --fix",
+    "lint": "biome check",
     "prepare": "husky",
-    "reinstall": "bun run clean:node_modules && bun install",
+    "reinstall": "yarn clean:node_modules && yarn install",
     "swiftlint": "swiftlint",
     "typecheck": "tsc --noEmit"
   },
   "lint-staged": {
     "*.swift": "swiftlint --fix",
-    "*.ts": "bunx @biomejs/biome check --fix --no-errors-on-unmatched",
-    "*.tsx": "bunx @biomejs/biome check --fix --no-errors-on-unmatched",
-    "*.js": "bunx @biomejs/biome check --fix --no-errors-on-unmatched",
-    "*.json": "bunx @biomejs/biome check --fix --no-errors-on-unmatched"
+    "*.ts": "biome check --fix --no-errors-on-unmatched",
+    "*.tsx": "biome check --fix --no-errors-on-unmatched",
+    "*.js": "biome check --fix --no-errors-on-unmatched",
+    "*.json": "biome check --fix --no-errors-on-unmatched"
   },
   "devDependencies": {
     "@biomejs/biome": "^2.2.4",
     "@changesets/cli": "^2.29.7",
-    "@types/bun": "1.2.21",
     "husky": "^9.1.7",
     "lint-staged": "^16.1.6",
     "pkg-pr-new": "^0.0.59",
@@ -33,9 +32,5 @@
     "apps/*",
     "packages/*"
   ],
-  "trustedDependencies": [
-    "@kingstinct/react-native-activity-kit",
-    "nitrogen",
-    "react-native-nitro-modules"
-  ]
+  "packageManager": "yarn@4.18.0+sha512.fcb8716fe7cd0eece141ffc18b92193a9df9204c1ba83189c288835223fc0bbe64af473bab0d5e9927a7daeb5caf2bb07eb2787cc9338ca040ea125f2a1f2f7e"
 }
