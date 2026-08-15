@@ -30,6 +30,7 @@
   "scripts": {
     "typecheck": "tsc --noEmit",
     "clean": "rm -rf android/build node_modules/**/android/build lib",
+    "prepare": "tsc && nitrogen --logLevel=\"debug\"",
     "prepublish": "yarn run specs",
     "typescript": "tsc",
     "specs": "tsc && nitrogen --logLevel=\"debug\""
