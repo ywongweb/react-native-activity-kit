@@ -93,59 +93,35 @@ class ActivityKitModule: HybridActivityKitModuleSpec {
     }
 
     func startActivity(attributes: AnyMap, state: AnyMap, options: StartActivityOptions?) throws -> HybridActivityProxySpec {
+        var pushType: PushType?
 
-        if #available(iOS 16.1, *) {
-            var pushType: PushType?
-
-            switch options?.pushType {
-            case .first(let useTokenConfig):
-                if useTokenConfig.token {
-                    pushType = .token
-                }
-            case .second(let pushChannelConfig):
-                if #available(iOS 18.0, *) {
-                    pushType = .channel(pushChannelConfig.channelName)
-                } else {
-                    // Fallback on earlier versions
-                }
-            default:
-                pushType = nil
+        switch options?.pushType {
+        case .first(let useTokenConfig):
+            if useTokenConfig.token {
+                pushType = .token
             }
-
-            let state = try ActivityKitModuleAttributes.ContentState(data: anyMapToDictionary(state))
-
-            let attributes = try ActivityKitModuleAttributes(data: anyMapToDictionary(attributes))
-
-            var activity: Activity<ActivityKitModuleAttributes>
-
-            if #available(iOS 16.2, *) {
-                let content = ActivityContent<ActivityKitModuleAttributes.ContentState>.init(
-                    state: state,
-                    staleDate: options?.staleDate,
-                    relevanceScore: options?.relevanceScore ?? 0,
-                )
-
-                if #available(iOS 18.0, *) {
-                    activity = try Activity.request(
-                        attributes: attributes,
-                        content: content,
-                        pushType: pushType,
-                        style: options?.style == .transient ? .transient : .standard
-                    )
-                } else {
-                    activity = try Activity.request(
-                        attributes: attributes,
-                        content: content,
-                        pushType: pushType
-                    )
-                }
-            } else {
-                activity = try Activity.request(attributes: attributes, contentState: state)
+        case .second(let pushChannelConfig):
+            if #available(iOS 18.0, *) {
+                pushType = .channel(pushChannelConfig.channelName)
             }
-            return ActivityProxy(activity: activity)
-        } else {
-            throw RuntimeError.error(withMessage: "ActivityKit is not available on this version of iOS. Please use iOS 16.1 or later.")
+        default:
+            pushType = nil
         }
+
+        let state = try ActivityKitModuleAttributes.ContentState(data: anyMapToDictionary(state))
+        let attributes = try ActivityKitModuleAttributes(data: anyMapToDictionary(attributes))
+        let content = ActivityContent<ActivityKitModuleAttributes.ContentState>(
+            state: state,
+            staleDate: options?.staleDate,
+            relevanceScore: options?.relevanceScore ?? 0,
+        )
+        let activity = try Activity.request(
+            attributes: attributes,
+            content: content,
+            pushType: pushType
+        )
+
+        return ActivityProxy(activity: activity)
     }
 
         func getActivityById(activityId: String) throws -> HybridActivityProxySpec? {

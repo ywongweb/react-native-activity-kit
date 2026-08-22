@@ -15,14 +15,8 @@ interface PushTypeChannelName {
 export interface StartActivityOptions {
   staleDate?: Date
   relevanceScore?: number
-  style?: ActivityStyle
   // requires push permissions
   pushType?: PushTypeToken | PushTypeChannelName
-}
-
-export enum ActivityStyle {
-  standard,
-  transient,
 }
 
 export interface ActivityKitModule extends HybridObject<{ ios: 'swift' }> {

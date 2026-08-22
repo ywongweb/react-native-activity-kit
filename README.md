@@ -149,7 +149,7 @@ Built on [Nitro Modules](https://github.com/mrousavy/nitro) for:
 
 ## 📱 Platform Support
 
-- ✅ iOS 16.1+ (Live Activities requirement)
+- ✅ iOS 16.2+
 - ❌ Android (Live Activities are iOS-only)
 
 ## 🤝 Contributing
